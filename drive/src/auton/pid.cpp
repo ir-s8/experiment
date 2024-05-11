@@ -2,18 +2,31 @@
 #include "subsystems/drivetrain.hpp"
 #include <cmath> 
 
+const int8_t imuPort = 1;
+okapi::IMU imu = okapi::IMU(imuPort);
+
 double remap(double deg){
     if(deg == 0)
         return 0;
-    else if(deg > 0)
-        return deg;
+
+    int intDeg = (int)deg;
+    double decimalDeg = deg - intDeg;
+
+    if(deg > 0)
+        intDeg = intDeg % 360;
     else if(deg < 0)
-        return -(deg+180);
+        intDeg = 360-(-intDeg%360);
+
+    deg = intDeg + abs(decimalDeg);
+
+    return (deg <= 180 ? deg : 360-deg);
+
 }
 
 void turnAngle(double target, bool reversed){
-    okapi::IterativePosPIDController rotatePID = okapi::IterativeControllerFactory::posPID(0, 0, 0); 
+    okapi::IterativePosPIDController rotatePID = okapi::IterativeControllerFactory::posPID(0, 0, 0); //initialize pid
     rotatePID.setTarget(0);
+
     double initAngle = remap(imu.controllerGet() - target);
     
     while (abs(0 - initAngle) >= 3 || abs(leftFrontMotor.getActualVelocity() + rightFrontMotor.getActualVelocity()) > 8){
@@ -26,8 +39,9 @@ void turnAngle(double target, bool reversed){
         chassis->getModel()->tank(vel * (reversed ? -1 : 1), -vel * (reversed ? -1 : 1));
         pros::delay(20);
     }
+
     rotatePID.reset();
-    chassis.getModel().tank(0,0);
+    chassis->getModel()->tank(0,0);
 }
     
 
