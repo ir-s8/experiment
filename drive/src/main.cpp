@@ -87,11 +87,11 @@ void opcontrol() {
 	
 	while(true){
 		double leftJoystick = controller.getAnalog(okapi::ControllerAnalog::leftY);
-		double rightJoystick = controller.getAnalog(okapi::ControllerAnalog::rightY);
+		double rightJoystick = controller.getAnalog(okapi::ControllerAnalog::rightX);
 
-		chassis->getModel()->arcade(leftJoystick, rightJoystick); //sends power to drive, arcade mode
+		chassis->getModel()->arcade(leftJoystick, rightJoystick*0.8); //sends power to drive, arcade mode
 
-		rate.delay(100_Hz);
+		
 
 		//function calls for intake, outtake, and shooter
 		updateIntake();
@@ -100,5 +100,6 @@ void opcontrol() {
 
 		updateShooter();
 		
+		pros::delay(50);
 	}
 }

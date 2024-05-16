@@ -1,7 +1,7 @@
 #include "subsystems/intake.hpp"
 #include "subsystems/globals.hpp"
 
-const int8_t intakePort = 1;
+const int8_t intakePort = 11;
 
 //initializing motor with motor ports, cartridge, etc.
 okapi::Motor intake(intakePort, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
@@ -21,7 +21,7 @@ void updateIntake(){
 					intake.moveVelocity(0);
 				}
 		}
-		else if(controller[okapi::ControllerDigital::R1].isPressed()){
+		else if(!controller[okapi::ControllerDigital::R1].isPressed()){
 				if(intakeState == 1){
 					intakeState++;
 				}

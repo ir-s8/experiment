@@ -1,11 +1,12 @@
 #include "subsystems/outtake.hpp"
 #include "subsystems/globals.hpp"
+#include "subsystems/intake.hpp"
 
 //intitializing motor port
-const int8_t outtakePort = 1;
+//const int8_t outtakePort = 10;
 
 //initialize motor
-okapi::Motor outtake(outtakePort, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor outtake(intakePort, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
 int outtakeState = 0; //global state variable
 
@@ -21,7 +22,7 @@ void updateOuttake(){
 					outtake.moveVelocity(0);
 				}
 		}
-		else if(controller[okapi::ControllerDigital::L1].isPressed()){
+		else if(!controller[okapi::ControllerDigital::L1].isPressed()){
 				if(outtakeState == 1){
 					outtakeState++;
 				}

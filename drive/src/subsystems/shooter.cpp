@@ -3,7 +3,7 @@
 #include "subsystems/drivetrain.hpp"
 
 //initialize motor port
-const int8_t shooterPort = 1;
+const int8_t shooterPort = 10;
 
 //initialize motor
 okapi::Motor shooter(shooterPort, true, okapi::AbstractMotor::gearset::red, okapi::AbstractMotor::encoderUnits::degrees);
@@ -17,19 +17,19 @@ void updateShooter(){
 					shooter.moveVelocity(500);
 					//ensures bot will not move while shooting
 					//hold
-					leftMiddleMotor.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-					rightMiddleMotor.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+					leftFrontMotor.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+					rightFrontMotor.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 					
 				}
 				else if(shooterState == 2){
 					shooterState++;
 					shooter.moveVelocity(0);
 					//coast
-					leftMiddleMotor.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-					rightMiddleMotor.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+					leftFrontMotor.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+					rightFrontMotor.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 				}
 		}
-		else if(controller[okapi::ControllerDigital::R2].isPressed()){
+		else if(!controller[okapi::ControllerDigital::R2].isPressed()){
 				if(shooterState == 1){
 					shooterState++;
 				}
