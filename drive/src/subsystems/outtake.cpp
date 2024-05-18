@@ -15,7 +15,7 @@ void updateOuttake(){
     if(controller[okapi::ControllerDigital::L1].isPressed()){
 				if(outtakeState == 0){
 					outtakeState++;
-					outtake.moveVelocity(-600);
+					outtake.moveVelocity(600);
 				}
 				else if(outtakeState == 2){
 					outtakeState++;

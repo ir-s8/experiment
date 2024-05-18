@@ -73,7 +73,7 @@ void driveDistance(double target){
 
         double vel = drivePID.step((distance*2)/3); //velocity variable
 
-        chassis->getModel()->tank(vel, vel); //sends power to motors
+        chassis->getModel()->tank(vel*0.9, vel); //sends power to motors
 
         pros::delay(16); //delay
 
